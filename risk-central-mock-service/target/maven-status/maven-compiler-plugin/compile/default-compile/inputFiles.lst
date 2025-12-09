@@ -1,0 +1,7 @@
+/home/Coder/Vídeos/Spring-boot/CoopCredit/risk-central-mock-service/src/main/java/com/coopcredit/risk/repository/RiskRepositoryMock.java
+/home/Coder/Vídeos/Spring-boot/CoopCredit/risk-central-mock-service/src/main/java/com/coopcredit/risk/model/RiskAssessmentResponse.java
+/home/Coder/Vídeos/Spring-boot/CoopCredit/risk-central-mock-service/src/main/java/com/coopcredit/risk/model/RiskAssessmentRequest.java
+/home/Coder/Vídeos/Spring-boot/CoopCredit/risk-central-mock-service/src/main/java/com/coopcredit/risk/RiskCentralApplication.java
+/home/Coder/Vídeos/Spring-boot/CoopCredit/risk-central-mock-service/src/main/java/com/coopcredit/risk/service/RiskAssessmentService.java
+/home/Coder/Vídeos/Spring-boot/CoopCredit/risk-central-mock-service/src/main/java/com/coopcredit/risk/model/RiskLevel.java
+/home/Coder/Vídeos/Spring-boot/CoopCredit/risk-central-mock-service/src/main/java/com/coopcredit/risk/controller/RiskAssessmentController.java
