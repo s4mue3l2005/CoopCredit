@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-09T17:31:37-0500",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 21.0.9 (Eclipse Adoptium)"
+    date = "2025-12-09T22:36:34+0000",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.17 (Eclipse Adoptium)"
 )
 @Component
 public class CreditMapperImpl implements CreditMapper {
@@ -26,14 +26,14 @@ public class CreditMapperImpl implements CreditMapper {
 
         Credit.CreditBuilder credit = Credit.builder();
 
+        credit.id( entity.getId() );
         credit.affiliate( affiliateMapper.toDomain( entity.getAffiliate() ) );
         credit.amount( entity.getAmount() );
-        credit.id( entity.getId() );
-        credit.rationale( entity.getRationale() );
+        credit.term( entity.getTerm() );
         if ( entity.getStatus() != null ) {
             credit.status( Enum.valueOf( CreditStatus.class, entity.getStatus() ) );
         }
-        credit.term( entity.getTerm() );
+        credit.rationale( entity.getRationale() );
 
         return credit.build();
     }
@@ -46,14 +46,14 @@ public class CreditMapperImpl implements CreditMapper {
 
         CreditEntity.CreditEntityBuilder creditEntity = CreditEntity.builder();
 
+        creditEntity.id( domain.getId() );
         creditEntity.affiliate( affiliateMapper.toEntity( domain.getAffiliate() ) );
         creditEntity.amount( domain.getAmount() );
-        creditEntity.id( domain.getId() );
-        creditEntity.rationale( domain.getRationale() );
+        creditEntity.term( domain.getTerm() );
         if ( domain.getStatus() != null ) {
             creditEntity.status( domain.getStatus().name() );
         }
-        creditEntity.term( domain.getTerm() );
+        creditEntity.rationale( domain.getRationale() );
 
         return creditEntity.build();
     }

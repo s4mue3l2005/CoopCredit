@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-09T17:31:37-0500",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 21.0.9 (Eclipse Adoptium)"
+    date = "2025-12-09T22:36:34+0000",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.17 (Eclipse Adoptium)"
 )
 @Component
 public class AffiliateMapperImpl implements AffiliateMapper {
@@ -21,12 +21,12 @@ public class AffiliateMapperImpl implements AffiliateMapper {
 
         Affiliate.AffiliateBuilder affiliate = Affiliate.builder();
 
-        affiliate.active( entity.isActive() );
-        affiliate.document( entity.getDocument() );
-        affiliate.email( entity.getEmail() );
         affiliate.id( entity.getId() );
         affiliate.name( entity.getName() );
+        affiliate.email( entity.getEmail() );
+        affiliate.document( entity.getDocument() );
         affiliate.salary( entity.getSalary() );
+        affiliate.active( entity.isActive() );
 
         return affiliate.build();
     }
@@ -39,12 +39,12 @@ public class AffiliateMapperImpl implements AffiliateMapper {
 
         AffiliateEntity.AffiliateEntityBuilder affiliateEntity = AffiliateEntity.builder();
 
-        affiliateEntity.active( domain.isActive() );
-        affiliateEntity.document( domain.getDocument() );
-        affiliateEntity.email( domain.getEmail() );
         affiliateEntity.id( domain.getId() );
         affiliateEntity.name( domain.getName() );
+        affiliateEntity.email( domain.getEmail() );
+        affiliateEntity.document( domain.getDocument() );
         affiliateEntity.salary( domain.getSalary() );
+        affiliateEntity.active( domain.isActive() );
 
         return affiliateEntity.build();
     }
