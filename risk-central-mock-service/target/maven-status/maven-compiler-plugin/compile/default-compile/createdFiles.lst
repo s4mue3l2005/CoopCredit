@@ -1,0 +1,8 @@
+com/coopcredit/risk/service/RiskAssessmentService.class
+com/coopcredit/risk/model/RiskAssessmentResponse.class
+com/coopcredit/risk/RiskCentralApplication.class
+com/coopcredit/risk/model/RiskLevel.class
+com/coopcredit/risk/controller/RiskAssessmentController.class
+com/coopcredit/risk/model/RiskAssessmentRequest.class
+com/coopcredit/risk/repository/RiskRepositoryMock.class
+com/coopcredit/risk/model/RiskAssessmentResponse$RiskAssessmentResponseBuilder.class
