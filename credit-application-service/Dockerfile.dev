@@ -1,0 +1,18 @@
+# Development Dockerfile
+FROM maven:3.9-eclipse-temurin-17-alpine
+
+WORKDIR /app
+
+# 1. Archive Structure: Copy Parent POM and ALL Modules
+# This structure ensures <parent> relativePath works and reactor is happy
+COPY pom.xml .
+COPY credit-application-service/pom.xml credit-application-service/
+COPY risk-central-mock-service/pom.xml risk-central-mock-service/
+
+# 2. Download dependencies (Cache layer)
+# We run this from the Module folder but with access to Parent in /app/pom.xml
+WORKDIR /app/credit-application-service
+RUN mvn dependency:go-offline
+
+# 3. Runtime Command
+CMD ["mvn", "spring-boot:run"]

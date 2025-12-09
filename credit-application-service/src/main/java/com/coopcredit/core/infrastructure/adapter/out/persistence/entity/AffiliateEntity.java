@@ -27,4 +27,7 @@ public class AffiliateEntity {
     
     private BigDecimal salary;
     private boolean active;
+    
+    @OneToMany(mappedBy = "affiliate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private java.util.List<CreditEntity> credits;
 }

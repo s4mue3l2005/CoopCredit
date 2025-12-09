@@ -4,6 +4,7 @@ import com.coopcredit.core.domain.port.out.RiskEvaluationResult;
 import com.coopcredit.core.domain.port.out.RiskServicePort;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -52,6 +53,8 @@ public class RiskServiceAdapter implements RiskServicePort {
     }
 
     @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class RiskResponse {
         private Integer score;
         private String riskLevel;

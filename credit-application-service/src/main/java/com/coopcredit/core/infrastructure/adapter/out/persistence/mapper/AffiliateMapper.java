@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface AffiliateMapper {
     Affiliate toDomain(AffiliateEntity entity);
+    @org.mapstruct.Mapping(target = "credits", ignore = true)
     AffiliateEntity toEntity(Affiliate domain);
 }

@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: coopcredit-db-dev
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: coopcredit
+      POSTGRES_USER: coopuser
+      POSTGRES_PASSWORD: coopassword
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    networks:
+      - coopcredit-net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U coopuser -d coopcredit" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  credit-service:
+    container_name: credit-service-dev
+    build:
+      context: .
+      dockerfile: credit-application-service/Dockerfile.dev
+    ports:
+      - "8082:8080"
+      - "5005:5005"
+    environment:
+      SERVER_PORT: 8080
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/coopcredit
+      SPRING_DATASOURCE_USERNAME: coopuser
+      SPRING_DATASOURCE_PASSWORD: coopassword
+      RISK_SERVICE_URL: http://risk-service:8080/api/risk/evaluate
+      SPRING_PROFILES_ACTIVE: dev
+    volumes:
+      - .:/app # Mount ROOT to access Parent POM
+      - ~/.m2:/root/.m2
+    working_dir: /app/credit-application-service # Run inside module
+    command: mvn clean spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    depends_on:
+      db:
+        condition: service_healthy
+      risk-service:
+        condition: service_started
+    networks:
+      - coopcredit-net
+
+  risk-service:
+    container_name: risk-service-dev
+    build:
+      context: .
+      dockerfile: risk-central-mock-service/Dockerfile.dev
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    volumes:
+      - .:/app # Mount ROOT
+      - ~/.m2:/root/.m2
+    working_dir: /app/risk-central-mock-service # Run inside module
+    command: mvn spring-boot:run
+    networks:
+      - coopcredit-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: coopcredit-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - coopcredit-net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: coopcredit-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - coopcredit-net
+
+networks:
+  coopcredit-net:
+    driver: bridge
+
+volumes:
+  postgres_data_dev:

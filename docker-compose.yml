@@ -15,13 +15,15 @@ services:
     networks:
       - coop-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U coopuser -d coopcredit"]
+      test: [ "CMD-SHELL", "pg_isready -U coopuser -d coopcredit" ]
       interval: 5s
       timeout: 5s
       retries: 5
 
   risk-service:
-    build: ./risk-central-mock-service
+    build:
+      context: .
+      dockerfile: ./risk-central-mock-service/Dockerfile
     container_name: risk-service
     ports:
       - "8081:8081"
@@ -31,7 +33,9 @@ services:
       - coop-network
 
   credit-service:
-    build: ./credit-application-service
+    build:
+      context: .
+      dockerfile: ./credit-application-service/Dockerfile
     container_name: credit-service
     ports:
       - "8080:8080"
@@ -41,6 +45,7 @@ services:
       SPRING_DATASOURCE_USERNAME: coopuser
       SPRING_DATASOURCE_PASSWORD: coopassword
       RISK_SERVICE_URL: http://risk-service:8081/api/risk/evaluate
+      SPRING_PROFILES_ACTIVE: dev
     depends_on:
       postgres:
         condition: service_healthy

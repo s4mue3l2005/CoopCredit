@@ -1,3 +1,4 @@
-/home/Coder/Vídeos/Spring-boot/CoopCredit/credit-application-service/src/test/java/com/coopcredit/core/CreditIntegrationTest.java
-/home/Coder/Vídeos/Spring-boot/CoopCredit/credit-application-service/src/test/java/com/coopcredit/core/BaseIntegrationTest.java
-/home/Coder/Vídeos/Spring-boot/CoopCredit/credit-application-service/src/test/java/com/coopcredit/core/application/service/CreditServiceTest.java
+/app/credit-application-service/src/test/java/com/coopcredit/core/CreditIntegrationTest.java
+/app/credit-application-service/src/test/java/com/coopcredit/core/AffiliateIntegrationTest.java
+/app/credit-application-service/src/test/java/com/coopcredit/core/BaseIntegrationTest.java
+/app/credit-application-service/src/test/java/com/coopcredit/core/application/service/CreditServiceTest.java

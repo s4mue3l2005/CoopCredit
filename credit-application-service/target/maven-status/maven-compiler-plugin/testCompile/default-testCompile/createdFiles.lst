@@ -1,3 +1,5 @@
 com/coopcredit/core/BaseIntegrationTest.class
+com/coopcredit/core/AffiliateIntegrationTest$RegisterAffiliatePayload.class
 com/coopcredit/core/CreditIntegrationTest.class
 com/coopcredit/core/application/service/CreditServiceTest.class
+com/coopcredit/core/AffiliateIntegrationTest.class

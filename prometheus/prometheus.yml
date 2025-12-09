@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'credit_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['credit-service:8080']
+
+  - job_name: 'risk_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['risk-service:8080']
