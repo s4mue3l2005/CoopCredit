@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="921d0f89-439b-486d-90ed-5660c9b15b2c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/risk-central-mock-service/target/risk-central-mock-service-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/risk-central-mock-service/target/risk-central-mock-service-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/risk-central-mock-service/target/risk-central-mock-service-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/risk-central-mock-service/target/risk-central-mock-service-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/risk-central-mock-service/target/surefire-reports/TEST-com.coopcredit.risk.service.RiskAssessmentServiceTest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/risk-central-mock-service/target/surefire-reports/com.coopcredit.risk.service.RiskAssessmentServiceTest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/credit-application-service/target/surefire-reports/TEST-com.coopcredit.core.CreditIntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/credit-application-service/target/surefire-reports/TEST-com.coopcredit.core.CreditIntegrationTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/credit-application-service/target/surefire-reports/TEST-com.coopcredit.core.application.service.CreditServiceTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/credit-application-service/target/surefire-reports/TEST-com.coopcredit.core.application.service.CreditServiceTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/credit-application-service/target/surefire-reports/com.coopcredit.core.CreditIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/credit-application-service/target/surefire-reports/com.coopcredit.core.CreditIntegrationTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/credit-application-service/target/surefire-reports/com.coopcredit.core.application.service.CreditServiceTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/credit-application-service/target/surefire-reports/com.coopcredit.core.application.service.CreditServiceTest.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +46,6 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature/risk-central-mock-service",
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
