@@ -19,6 +19,7 @@
 
     <modules>
         <module>risk-central-mock-service</module>
+        <module>credit-application-service</module>
     </modules>
 
     <properties>
