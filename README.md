@@ -125,3 +125,84 @@ Here are the main endpoints available in the system:
 | **Affiliates** | `GET` | `/api/v1/affiliates/{id}` | Get affiliate details |
 | **Credits** | `POST` | `/api/v1/credits` | Apply for a new credit |
 | **Credits** | `GET` | `/api/v1/credits` | List all credit applications |
+
+---
+
+## 🧪 Testing
+
+To ensure the system's stability and compliance with business rules, we include a comprehensive test suite.
+
+### Running Unit Tests
+Executes isolation tests for domain logic and service layers.
+```bash
+mvn test
+```
+
+### Running Integration Tests
+Executes end-to-end scenarios using **Testcontainers** (requires Docker).
+```bash
+mvn verify
+```
+
+> **Note:** The integration tests verify critical flows like Affiliate Registration and Credit Application with real database interactions.
+
+---
+
+## 🛠️ Configuration & Environment
+
+The application is configured via `application.properties` and environment variables.
+
+| Variable | Description | Default |
+| :--- | :--- | :--- |
+| `SERVER_PORT` | Port for the Credit Service | `8080` (mapped to `8082`) |
+| `DB_URL` | PostgreSQL Connection URL | `jdbc:postgresql://postgres:5432/coopcredit` |
+| `DB_USERNAME` | Database User | `postgres` |
+| `DB_PASSWORD` | Database Password | `postgres` |
+| `RISK_SERVICE_URL` | URL of the Risk Mock Service | `http://risk-service:8081` |
+| `JWT_SECRET` | Secret key for token generation | *(Set in properties)* |
+
+---
+
+## 💡 API Usage Examples
+
+### 1. Register an Affiliate
+```bash
+curl -X POST http://localhost:8082/api/v1/affiliates \
+  -H "Authorization: Bearer <YOUR_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "document": "DOC12345",
+    "salary": 5000.00,
+    "enrollmentDate": "2023-01-01"
+  }'
+```
+
+### 2. Apply for Credit
+```bash
+curl -X POST http://localhost:8082/api/v1/credits \
+  -H "Authorization: Bearer <YOUR_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "affiliateId": 1,
+    "amount": 20000.00,
+    "term": 24
+  }'
+```
+
+---
+
+## 🤝 Contributing
+
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
