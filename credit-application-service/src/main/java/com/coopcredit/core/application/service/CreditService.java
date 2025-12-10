@@ -30,32 +30,44 @@ public class CreditService implements ApplyForCreditUseCase, GetCreditApplicatio
         // 1. Validate Affiliate
         Affiliate affiliate = affiliateRepositoryPort.findById(affiliateId)
                 .orElseThrow(() -> new IllegalArgumentException("Affiliate not found"));
-        
+
         if (!affiliate.isActive()) {
             throw new IllegalStateException("Affiliate is not active");
+        }
+
+        // 1.1 Check Seniority (Must be > 6 months)
+        if (affiliate.getEnrollmentDate() != null &&
+                java.time.LocalDate.now().minusMonths(6).isBefore(affiliate.getEnrollmentDate())) {
+            throw new IllegalStateException("Affiliate seniority must be at least 6 months");
+        }
+
+        // 1.2 Check Max Amount (Amount <= 10 * Salary)
+        BigDecimal maxAmount = affiliate.getSalary().multiply(BigDecimal.valueOf(10));
+        if (amount.compareTo(maxAmount) > 0) {
+            throw new IllegalStateException("Amount exceeds limit (10x salary). Max allowed: " + maxAmount);
+        }
+
+        // 1.3 Check Quota/Income Ratio (Installment <= 50% Salary)
+        // Installment = Amount / Term
+        BigDecimal installment = amount.divide(BigDecimal.valueOf(term), java.math.RoundingMode.CEILING);
+        BigDecimal maxInstallment = affiliate.getSalary().multiply(BigDecimal.valueOf(0.5));
+
+        if (installment.compareTo(maxInstallment) > 0) {
+            throw new IllegalStateException("Installment exceeds 50% of salary. Estimated Installment: " + installment
+                    + ", Max: " + maxInstallment);
         }
 
         // 2. Call Risk Service
         RiskEvaluationResult riskResult = riskServicePort.evaluateRisk(affiliate.getDocument(), amount, term);
 
-        // 3. Evaluate Policies
-        CreditStatus status = CreditStatus.APPROVED;
-        String rationale = riskResult.getRationale();
+        // 3. Initial evaluation - All credits start as PENDING for Analyst review
+        // Business rule: Credits must be evaluated by an Analyst before
+        // approval/rejection
+        CreditStatus status = CreditStatus.PENDING;
+        String rationale = "Credit application submitted. Awaiting analyst evaluation. Risk assessment: "
+                + riskResult.getRationale();
 
-        // Policy: High Risk -> Rejected
-        if ("HIGH".equals(riskResult.getRiskLevel())) {
-            status = CreditStatus.REJECTED;
-            rationale = "Rejected due to High Risk. " + rationale;
-        }
-
-        // Policy: Max amount vs Salary (Example: amount cannot exceed 10x salary)
-        // Note: Assuming monthly salary, simple rule.
-        if (amount.compareTo(affiliate.getSalary().multiply(new BigDecimal("10"))) > 0) {
-            status = CreditStatus.REJECTED;
-            rationale = "Amount exceeds 10x salary limit.";
-        }
-
-        // 4. Create and Save Credit
+        // 4. Create and Save Credit (status will be PENDING until Analyst evaluates)
         Credit credit = Credit.builder()
                 .affiliate(affiliate)
                 .amount(amount)
@@ -76,4 +88,10 @@ public class CreditService implements ApplyForCreditUseCase, GetCreditApplicatio
     public List<Credit> getAll() {
         return creditRepositoryPort.findAll();
     }
+
+    @Override
+    public List<Credit> getPending() {
+        return creditRepositoryPort.findByStatus(CreditStatus.PENDING.name());
+    }
+
 }

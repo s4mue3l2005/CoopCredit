@@ -44,4 +44,11 @@ public class CreditRepositoryAdapter implements CreditRepositoryPort {
                 .map(mapper::toDomain)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Credit> findByStatus(String status) {
+        return jpaRepository.findByStatus(status).stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList());
+    }
 }

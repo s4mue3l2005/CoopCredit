@@ -8,8 +8,9 @@ services:
       POSTGRES_DB: coopcredit
       POSTGRES_USER: coopuser
       POSTGRES_PASSWORD: coopassword
-    ports:
-      - "5432:5432"
+    # Port not exposed to host - services communicate internally via Docker network
+    # ports:
+    #   - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:

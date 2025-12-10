@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-09T22:36:34+0000",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.17 (Eclipse Adoptium)"
+    date = "2025-12-09T19:45:11-0500",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.17 (Ubuntu)"
 )
 @Component
 public class AffiliateMapperImpl implements AffiliateMapper {
@@ -26,6 +26,7 @@ public class AffiliateMapperImpl implements AffiliateMapper {
         affiliate.email( entity.getEmail() );
         affiliate.document( entity.getDocument() );
         affiliate.salary( entity.getSalary() );
+        affiliate.enrollmentDate( entity.getEnrollmentDate() );
         affiliate.active( entity.isActive() );
 
         return affiliate.build();
@@ -44,6 +45,7 @@ public class AffiliateMapperImpl implements AffiliateMapper {
         affiliateEntity.email( domain.getEmail() );
         affiliateEntity.document( domain.getDocument() );
         affiliateEntity.salary( domain.getSalary() );
+        affiliateEntity.enrollmentDate( domain.getEnrollmentDate() );
         affiliateEntity.active( domain.isActive() );
 
         return affiliateEntity.build();

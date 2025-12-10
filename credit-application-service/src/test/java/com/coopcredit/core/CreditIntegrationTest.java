@@ -26,54 +26,57 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class CreditIntegrationTest extends BaseIntegrationTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+        @Autowired
+        private ObjectMapper objectMapper;
 
-    @MockBean
-    private RiskServicePort riskServicePort;
+        @MockBean
+        private RiskServicePort riskServicePort;
 
-    @Test
-    @WithMockUser  // Bypasses JWT filter logic for simplicity in integration test of business logic
-    void testRegisterAffiliateAndApplyForCredit() throws Exception {
-        // 1. Register Affiliate
-        RegisterAffiliateRequest affiliateRequest = new RegisterAffiliateRequest();
-        affiliateRequest.setName("John Doe");
-        affiliateRequest.setEmail("john@example.com");
-        affiliateRequest.setDocument("DOC12345");
-        affiliateRequest.setSalary(new BigDecimal("5000.00"));
+        @Test
+        @WithMockUser // Bypasses JWT filter logic for simplicity in integration test of business
+                      // logic
+        void testRegisterAffiliateAndApplyForCredit() throws Exception {
+                // 1. Register Affiliate
+                RegisterAffiliateRequest affiliateRequest = new RegisterAffiliateRequest();
+                affiliateRequest.setName("John Doe");
+                affiliateRequest.setEmail("john@example.com");
+                affiliateRequest.setDocument("DOC12345");
+                affiliateRequest.setSalary(new BigDecimal("5000.00"));
+                affiliateRequest.setEnrollmentDate(java.time.LocalDate.now().minusMonths(12));
 
-        mockMvc.perform(post("/api/affiliates")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(affiliateRequest)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").exists());
+                mockMvc.perform(post("/api/affiliates")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(affiliateRequest)))
+                                .andExpect(status().isCreated())
+                                .andExpect(jsonPath("$.id").exists());
 
-        // Assuming ID 1 for the first affiliate (fresh container)
-        Long affiliateId = 1L;
+                // Assuming ID 1 for the first affiliate (fresh container)
+                Long affiliateId = 1L;
 
-        // 2. Mock Risk Service Response
-        RiskEvaluationResult lowRisk = RiskEvaluationResult.builder()
-                .score(800)
-                .riskLevel("LOW")
-                .rationale("Good score")
-                .build();
-        
-        when(riskServicePort.evaluateRisk(anyString(), any(BigDecimal.class), anyInt()))
-                .thenReturn(lowRisk);
+                // 2. Mock Risk Service Response
+                RiskEvaluationResult lowRisk = RiskEvaluationResult.builder()
+                                .score(800)
+                                .riskLevel("LOW")
+                                .rationale("Good score")
+                                .build();
 
-        // 3. Apply for Credit
-        ApplyForCreditRequest creditRequest = new ApplyForCreditRequest();
-        creditRequest.setAffiliateId(affiliateId);
-        creditRequest.setAmount(new BigDecimal("10000.00"));
-        creditRequest.setTerm(12);
+                when(riskServicePort.evaluateRisk(anyString(), any(BigDecimal.class), anyInt()))
+                                .thenReturn(lowRisk);
 
-        mockMvc.perform(post("/api/credits")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(creditRequest)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.status").value("APPROVED"));
-    }
+                // 3. Apply for Credit
+                ApplyForCreditRequest creditRequest = new ApplyForCreditRequest();
+                creditRequest.setAffiliateId(affiliateId);
+                creditRequest.setAmount(new BigDecimal("10000.00"));
+                creditRequest.setTerm(12);
+
+                mockMvc.perform(post("/api/credits")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(creditRequest)))
+                                .andExpect(status().isCreated())
+                                .andExpect(jsonPath("$.status").value("PENDING")); // Changed: Credits now start as
+                                                                                   // PENDING
+        }
 }

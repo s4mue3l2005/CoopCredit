@@ -1,0 +1,77 @@
+
+    @Test
+    @DisplayName("Should throw exception when affiliate seniority is less than 6 months")
+    void applyForCredit_WhenSeniorityTooLow_ShouldThrowException() {
+        Long affiliateId = 1L;
+        Affiliate affiliate = new Affiliate();
+        affiliate.setId(affiliateId);
+        affiliate.setActive(true);
+        affiliate.setSalary(new BigDecimal("5000"));
+        affiliate.setEnrollmentDate(java.time.LocalDate.now().minusMonths(1)); // Only 1 month
+        affiliate.setDocument("DOC_NEW");
+
+        when(affiliateRepositoryPort.findById(affiliateId)).thenReturn(Optional.of(affiliate));
+
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> creditService.apply(affiliateId, new BigDecimal("1000"), 12)
+        );
+
+        assertEquals("Affiliate seniority must be at least 6 months", exception.getMessage());
+        verify(creditRepositoryPort, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("Should throw exception when amount exceeds 10x salary")
+    void applyForCredit_WhenAmountTooHigh_ShouldThrowException() {
+        Long affiliateId = 1L;
+        Affiliate affiliate = new Affiliate();
+        affiliate.setId(affiliateId);
+        affiliate.setActive(true);
+        affiliate.setSalary(new BigDecimal("5000"));
+        affiliate.setEnrollmentDate(java.time.LocalDate.now().minusMonths(12));
+        affiliate.setDocument("DOC1");
+
+        when(affiliateRepositoryPort.findById(affiliateId)).thenReturn(Optional.of(affiliate));
+
+        // Max amount should be 50,000. Requesting 50,001.
+        BigDecimal amount = new BigDecimal("50001");
+
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> creditService.apply(affiliateId, amount, 12)
+        );
+
+        assertTrue(exception.getMessage().contains("Amount exceeds limit"));
+        verify(creditRepositoryPort, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("Should throw exception when installment exceeds 50% of salary")
+    void applyForCredit_WhenInstallmentTooHigh_ShouldThrowException() {
+        Long affiliateId = 1L;
+        Affiliate affiliate = new Affiliate();
+        affiliate.setId(affiliateId);
+        affiliate.setActive(true);
+        affiliate.setSalary(new BigDecimal("1000")); // Salary 1000
+        affiliate.setEnrollmentDate(java.time.LocalDate.now().minusMonths(12));
+        affiliate.setDocument("DOC1");
+
+        when(affiliateRepositoryPort.findById(affiliateId)).thenReturn(Optional.of(affiliate));
+
+        // Amount 6000, Term 10 => Installment 600.
+        // 50% of Salary = 500.
+        // 600 > 500 => Fail.
+        // Check Max Amount first: 6000 <= 10*1000 (10000). OK.
+        
+        BigDecimal amount = new BigDecimal("6000");
+        Integer term = 10;
+
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> creditService.apply(affiliateId, amount, term)
+        );
+
+        assertTrue(exception.getMessage().contains("Installment exceeds 50% of salary"));
+        verify(creditRepositoryPort, never()).save(any());
+    }

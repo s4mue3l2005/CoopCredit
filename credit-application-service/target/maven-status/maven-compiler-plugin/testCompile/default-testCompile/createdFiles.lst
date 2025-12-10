@@ -1,5 +1,16 @@
-com/coopcredit/core/BaseIntegrationTest.class
+com/coopcredit/core/application/service/UserServiceTest.class
 com/coopcredit/core/AffiliateIntegrationTest$RegisterAffiliatePayload.class
+com/coopcredit/core/application/service/CreditEvaluationServiceTest.class
+com/coopcredit/core/application/service/AffiliateUpdateServiceTest.class
+com/coopcredit/core/CreditEvaluationIntegrationTest.class
+com/coopcredit/core/AuthIntegrationTest$RegisterUserRequest.class
+com/coopcredit/core/BaseIntegrationTest.class
+com/coopcredit/core/infrastructure/adapter/in/web/AuthControllerTest$RegisterUserRequest.class
+com/coopcredit/core/AffiliateUpdateIntegrationTest$UpdateAffiliateRequest.class
 com/coopcredit/core/CreditIntegrationTest.class
 com/coopcredit/core/application/service/CreditServiceTest.class
 com/coopcredit/core/AffiliateIntegrationTest.class
+com/coopcredit/core/AffiliateUpdateIntegrationTest.class
+com/coopcredit/core/infrastructure/adapter/in/web/AuthControllerTest.class
+com/coopcredit/core/CreditEvaluationIntegrationTest$EvaluateCreditRequest.class
+com/coopcredit/core/AuthIntegrationTest.class

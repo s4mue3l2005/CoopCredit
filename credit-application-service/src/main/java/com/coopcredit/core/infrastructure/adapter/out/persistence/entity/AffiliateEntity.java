@@ -21,13 +21,19 @@ public class AffiliateEntity {
 
     private String name;
     private String email;
-    
+
     @Column(unique = true)
     private String document;
-    
+
+    @Column(nullable = false)
     private BigDecimal salary;
+
+    @Column(name = "enrollment_date", nullable = false)
+    private java.time.LocalDate enrollmentDate;
+
+    @Column(nullable = false)
     private boolean active;
-    
+
     @OneToMany(mappedBy = "affiliate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private java.util.List<CreditEntity> credits;
 }

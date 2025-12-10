@@ -16,5 +16,6 @@ public class Affiliate {
     private String email;
     private String document;
     private BigDecimal salary;
+    private java.time.LocalDate enrollmentDate;
     private boolean active;
 }

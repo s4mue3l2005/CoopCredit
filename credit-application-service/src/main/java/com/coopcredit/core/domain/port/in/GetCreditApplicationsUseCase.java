@@ -5,5 +5,8 @@ import java.util.List;
 
 public interface GetCreditApplicationsUseCase {
     List<Credit> getByAffiliate(Long affiliateId);
+
     List<Credit> getAll();
+
+    List<Credit> getPending();
 }
