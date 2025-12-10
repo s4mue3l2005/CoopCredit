@@ -303,7 +303,7 @@ docker --version # Docker 20.10+
 
 ```bash
 # 1️⃣ Clonar el repositorio
-git clone https://github.com/your-username/CoopCredit.git
+git clone https://github.com/s4mue3l2005/CoopCredit.git
 cd CoopCredit
 
 # 2️⃣ Levantar servicios con Docker
@@ -331,14 +331,14 @@ open http://localhost:8080/swagger-ui/index.html
 
 | Módulo | Método | Endpoint | Autenticación | Descripción |
 |--------|--------|----------|---------------|-------------|
-| **Auth** | POST | `/api/v1/auth/register` | ❌ Pública | Registrar nuevo usuario |
-| **Auth** | POST | `/api/v1/auth/login` | ❌ Pública | Obtener JWT token |
-| **Affiliates** | POST | `/api/v1/affiliates` | ✅ JWT | Crear afiliado |
-| **Affiliates** | GET | `/api/v1/affiliates/{id}` | ✅ JWT | Consultar afiliado |
-| **Affiliates** | PUT | `/api/v1/affiliates/{id}` | ✅ JWT | Actualizar afiliado |
-| **Credits** | POST | `/api/v1/credits` | ✅ JWT | Solicitar crédito |
-| **Credits** | GET | `/api/v1/credits` | ✅ JWT | Listar solicitudes |
-| **Credits** | POST | `/api/v1/credits/{id}/evaluate` | ✅ JWT + ADMIN | Evaluar crédito |
+| **Auth** | POST | `/api/v1/auth/register` | 🔓 Pública | Registrar nuevo usuario |
+| **Auth** | POST | `/api/v1/auth/login` | 🔓 Pública | Obtener JWT token |
+| **Affiliates** | POST | `/api/v1/affiliates` | 🔒 JWT | Crear afiliado |
+| **Affiliates** | GET | `/api/v1/affiliates/{id}` | 🔒 JWT | Consultar afiliado |
+| **Affiliates** | PUT | `/api/v1/affiliates/{id}` | 🔒 JWT | Actualizar afiliado |
+| **Credits** | POST | `/api/v1/credits` | 🔒 JWT | Solicitar crédito |
+| **Credits** | GET | `/api/v1/credits` | 🔒 JWT | Listar solicitudes |
+| **Credits** | POST | `/api/v1/credits/{id}/evaluate` | 🔒 JWT + ADMIN | Evaluar crédito |
 
 ### Swagger UI
 
